@@ -34,7 +34,16 @@ def molecular_weight(protein_seq):
     # TODO: Implement this function
     # Hint: Loop through the sequence and sum up the weights
     # Hint: Subtract 18.01 for each peptide bond (number of residues - 1) to account for water loss
-    pass
+#def molecular_weight(protein_seq):
+    total_weight = 0.0
+    for aa in protein_seq:
+        if aa in aa_weights:
+            total_weight += aa_weights[aa]
+    sequence_length = len(protein_seq)
+    if sequence_length > 1:
+       water_loss = (sequence_length - 1) * 18.01
+       total_weight -= water_loss
+    return total_weight
 
 
 # Exercise 2: Count Hydrophobic Residues
@@ -59,7 +68,11 @@ def count_hydrophobic(protein_seq):
 
     # TODO: Implement this function
     # Hint: Use a for loop or sum() with a generator expression
-    pass
+    hydrophobic_count = 0
+    for aa in protein_seq:
+        if aa in hydrophobic:
+            hydrophobic_count += 1
+    return hydrophobic_count
 
 
 # Exercise 3: Find Motif Positions
@@ -81,8 +94,15 @@ def find_motif(seq, motif):
     """
     # TODO: Implement this function
     # Hint: Loop through the sequence and check if seq[i:i+len(motif)] == motif
-    pass
-
+    positions = []
+    motif_len = len(motif)
+    if motif_len == 0:
+        return positions
+    for i in range(len(seq)):
+        current_slice = seq[i : i + motif_len]
+        if current_slice == motif:
+            positions.append(i)
+    return positions
 
 # Exercise 4: Calculate Isoelectric Point (Simplified)
 # TODO: Implement a simplified function to estimate the isoelectric point
@@ -108,8 +128,14 @@ def count_charged_residues(protein_seq):
 
     # TODO: Implement this function
     # Return a tuple of (number of positive, number of negative)
-    pass
-
+    positive_count = 0
+    negative_count = 0
+    for aa in protein_seq:
+        if aa in positive:
+            positive_count += 1
+        elif aa in negative:
+            negative_count += 1
+    return (positive_count, negative_count)
 
 # Test your functions
 if __name__ == "__main__":
